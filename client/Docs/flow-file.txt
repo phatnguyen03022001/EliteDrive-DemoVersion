@@ -1,0 +1,648 @@
+================================================================
+FRONTEND PAGES & FORMS STRUCTURE - COMPLETE LIST
+================================================================
+
+NOTE:
+- Profile: Owner dùng chung Customer profile (useProfile từ customer.queries)
+- KYC: Owner dùng chung Customer KYC (useKycStatus, useSubmitKyc từ customer.queries)
+- Payment: Mock QR Code (không cần payment gateway thật)
+
+================================================================
+1. CUSTOMER ROLE (10 pages)
+================================================================
+
+─────────────────────────────────────────────────────────────
+1. /customer/dashboard/page.tsx
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useProfile()
+  - useWallet()
+  - useBookings({ page: 1, limit: 5 })
+
+Components:
+  - WelcomeCard.tsx
+  - WalletBalanceCard.tsx
+  - QuickStatsCard.tsx
+  - RecentBookingsTable.tsx
+
+Forms: KHÔNG CẦN
+
+─────────────────────────────────────────────────────────────
+2. /customer/cars/page.tsx (Public - Tìm xe)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - Không dùng hook (gọi trực tiếp CustomerService.searchCars)
+
+Components:
+  - SearchFilters.tsx
+  - CarGrid.tsx
+  - CarCard.tsx
+  - Pagination.tsx
+
+Forms:
+  - SearchFiltersForm.tsx (filters: location, dates, category, price)
+
+─────────────────────────────────────────────────────────────
+3. /customer/promotions/page.tsx
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useActivePromotions()
+
+Components:
+  - PromotionCard.tsx
+  - CopyCodeButton.tsx
+
+Forms: KHÔNG CẦN
+
+─────────────────────────────────────────────────────────────
+4. /customer/bookings/page.tsx (Lịch sử đặt xe)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useBookings(params)
+  - useCancelBooking()
+
+Components:
+  - StatusFilterTabs.tsx
+  - BookingTable.tsx
+  - BookingCard.tsx
+  - Pagination.tsx
+
+Forms: KHÔNG CẦN
+
+─────────────────────────────────────────────────────────────
+5. /customer/bookings/[id]/page.tsx (Chi tiết & Thanh toán)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useBookingDetail(id)
+  - usePaymentDetail(id)
+  - useCreatePayment()
+  - useConfirmPayment()
+  - useCancelBooking()
+  - useApplyPromotion()
+
+Components:
+  - BookingDetailsCard.tsx
+  - CarInfoCard.tsx
+  - PricingBreakdown.tsx
+  - PaymentStatusBadge.tsx
+  - QRCodeDisplay.tsx
+
+Forms:
+  - ApplyPromotionForm.tsx (input: promoCode)
+  - CreatePaymentForm.tsx (select: paymentMethod)
+
+─────────────────────────────────────────────────────────────
+6. /customer/wallet/topup/page.tsx
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useWallet()
+  - useWalletTopup()
+
+Components:
+  - CurrentBalanceCard.tsx
+  - QRCodeDisplay.tsx
+  - PaymentInstructions.tsx
+
+Forms:
+  - WalletTopupForm.tsx (inputs: amount, paymentMethod)
+
+─────────────────────────────────────────────────────────────
+7. /customer/wallet/transactions/page.tsx
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useWallet()
+  - useWalletTransactions(params)
+
+Components:
+  - WalletBalanceCard.tsx
+  - TransactionTable.tsx
+  - TransactionRow.tsx
+  - Pagination.tsx
+
+Forms: KHÔNG CẦN
+
+─────────────────────────────────────────────────────────────
+8. /customer/profile/page.tsx
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useProfile()
+  - useUpdateProfile()
+
+Components:
+  - ProfileInfoCard.tsx
+  - AvatarUpload.tsx
+
+Forms:
+  - UpdateProfileForm.tsx (inputs: firstName, lastName, phone, 
+    dateOfBirth, address, city, country, licenseNumber, licenseExpiry)
+
+─────────────────────────────────────────────────────────────
+9. /customer/kyc/page.tsx (Xác thực KYC)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useKycStatus()
+  - useSubmitKyc()
+
+Components:
+  - KYCStatusBadge.tsx
+  - KYCInstructions.tsx
+  - ImagePreview.tsx
+
+Forms:
+  - SubmitKYCForm.tsx (inputs: documentType, documentNumber, 
+    documentFront[File], documentBack[File], faceImage[File])
+
+─────────────────────────────────────────────────────────────
+10. /customer/reviews/page.tsx
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useCreateReview()
+  - useMyReviews(params) [CẦN THÊM HOOK]
+
+Components:
+  - ReviewCard.tsx
+  - StarRating.tsx
+  - ReviewForm.tsx
+
+Forms:
+  - CreateReviewForm.tsx (inputs: carId, bookingId, rating, title, content)
+
+
+================================================================
+2. OWNER ROLE (10 pages)
+================================================================
+
+─────────────────────────────────────────────────────────────
+1. /owner/kyc/page.tsx (Dùng chung Customer KYC)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useKycStatus() [từ customer.queries]
+  - useSubmitKyc() [từ customer.queries]
+
+Components:
+  - Tái sử dụng từ /customer/kyc:
+    - KYCStatusBadge.tsx
+    - KYCInstructions.tsx
+    - ImagePreview.tsx
+
+Forms:
+  - Tái sử dụng: SubmitKYCForm.tsx
+
+NOTE: CHỈ KHÁC CONTENT/HƯỚNG DẪN, LOGIC GIỐNG HỆT CUSTOMER
+
+─────────────────────────────────────────────────────────────
+2. /owner/cars/page.tsx (Danh sách xe)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useMyCars(params)
+  - useCreateCar()
+  - useUpdateCar()
+  - useDeleteCar()
+  - useSubmitCarForReview() [CẦN THÊM HOOK]
+
+Components:
+  - CarTable.tsx
+  - CarStatusBadge.tsx
+  - CarActionsMenu.tsx
+
+Forms:
+  - CreateCarForm.tsx (inputs: name, brand, model, year, licensePlate,
+    color, transmission, fuelType, seatCount, description, pricePerDay,
+    categoryId, locationId, mainImageUrl, imageUrls[])
+  - UpdateCarForm.tsx (same as CreateCarForm với default values)
+
+─────────────────────────────────────────────────────────────
+3. /owner/calendar/page.tsx (Lịch & Giá)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useMyCars() (để select xe)
+  - useCalendar(carId, params) [CẦN THÊM HOOK]
+  - useBlockCalendar() [CẦN THÊM HOOK]
+
+Components:
+  - CarSelector.tsx
+  - CalendarView.tsx
+  - DateBlockModal.tsx
+
+Forms:
+  - BlockDateForm.tsx (inputs: date, blockedReason, isBlocked)
+
+─────────────────────────────────────────────────────────────
+4. /owner/bookings/page.tsx (Yêu cầu thuê xe)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useOwnerBookings(params)
+  - useApproveBooking()
+  - useRejectBooking()
+
+Components:
+  - BookingTable.tsx
+  - BookingStatusBadge.tsx
+  - ApproveRejectButtons.tsx
+
+Forms:
+  - RejectBookingForm.tsx (input: reason)
+
+─────────────────────────────────────────────────────────────
+5. /owner/trips/page.tsx (Giao nhận xe)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useOwnerTrips(params)
+  - useCheckinTrip()
+  - useCheckoutTrip()
+
+Components:
+  - TripTable.tsx
+  - TripStatusBadge.tsx
+  - CheckinCheckoutModal.tsx
+
+Forms:
+  - CheckinForm.tsx (inputs: startOdometer, startFuelLevel, pickupNotes)
+  - CheckoutForm.tsx (inputs: endOdometer, endFuelLevel, dropoffNotes)
+
+─────────────────────────────────────────────────────────────
+6. /owner/wallet/page.tsx (Ví điện tử)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useOwnerWallet()
+
+Components:
+  - WalletBalanceCard.tsx
+  - QuickActionsCard.tsx
+
+Forms: KHÔNG CẦN
+
+─────────────────────────────────────────────────────────────
+7. /owner/earnings/page.tsx (Thu nhập)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useOwnerEarnings(params)
+
+Components:
+  - EarningsChart.tsx
+  - EarningsTable.tsx
+  - Pagination.tsx
+
+Forms: KHÔNG CẦN
+
+─────────────────────────────────────────────────────────────
+8. /owner/withdraw/page.tsx (Rút tiền)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useOwnerWallet()
+  - useRequestWithdraw()
+
+Components:
+  - CurrentBalanceCard.tsx
+  - WithdrawHistory.tsx
+
+Forms:
+  - WithdrawRequestForm.tsx (inputs: amount, bankAccountNumber,
+    bankAccountName, description)
+
+─────────────────────────────────────────────────────────────
+9. /owner/transactions/page.tsx
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useOwnerWallet()
+  - useOwnerTransactions(params) [CẦN THÊM HOOK]
+
+Components:
+  - TransactionTable.tsx
+  - TransactionTypeFilter.tsx
+  - Pagination.tsx
+
+Forms: KHÔNG CẦN
+
+─────────────────────────────────────────────────────────────
+10. /owner/profile/page.tsx (Dùng chung Customer Profile)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useProfile() [từ customer.queries]
+  - useUpdateProfile() [từ customer.queries]
+
+Components:
+  - Tái sử dụng từ /customer/profile:
+    - ProfileInfoCard.tsx
+    - AvatarUpload.tsx
+
+Forms:
+  - Tái sử dụng: UpdateProfileForm.tsx
+  - (Có thể thêm fields riêng cho Owner: companyName, taxId, bankInfo)
+
+NOTE: DÙNG CHUNG ENDPOINT /api/customer/profile
+
+
+================================================================
+3. ADMIN ROLE (13 pages)
+================================================================
+
+─────────────────────────────────────────────────────────────
+1. /admin/dashboard/page.tsx
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useOverviewReport()
+  - usePlatformWallet()
+  - useEscrowSummary() [OPTIONAL - có thể tổng hợp từ 2 hooks trên]
+
+Components:
+  - StatsGrid.tsx (4 cards: Users, Cars, Bookings, Revenue)
+  - PlatformWalletCard.tsx
+  - EscrowSummaryCard.tsx
+  - RecentActivities.tsx
+
+Forms: KHÔNG CẦN
+
+─────────────────────────────────────────────────────────────
+2. /admin/kyc/page.tsx (Duyệt KYC)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useKycCustomers(params)
+  - useApproveKyc()
+  - useRejectKyc()
+
+Components:
+  - KYCTable.tsx
+  - KYCDetailModal.tsx
+  - ImageGallery.tsx
+  - ApproveRejectButtons.tsx
+
+Forms:
+  - RejectKYCForm.tsx (input: rejectionReason)
+
+─────────────────────────────────────────────────────────────
+3. /admin/cars/page.tsx (Duyệt xe)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - usePendingCars()
+  - useApproveCar()
+
+Components:
+  - PendingCarsTable.tsx
+  - CarDetailModal.tsx
+  - DocumentsGallery.tsx
+
+Forms: KHÔNG CẦN
+
+─────────────────────────────────────────────────────────────
+4. /admin/escrow/page.tsx (Giám sát Escrow)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useEscrowSummary() [OPTIONAL]
+  - usePendingReleaseTrips(params)
+  - useReleasePayment()
+  - useRefundPayment()
+
+Components:
+  - EscrowSummaryCard.tsx
+  - PendingReleaseTable.tsx
+  - ReleasePaymentModal.tsx
+  - RefundPaymentModal.tsx
+
+Forms:
+  - ReleasePaymentForm.tsx (inputs: bookingId, platformFeePercent)
+  - RefundPaymentForm.tsx (inputs: bookingId, refundPercent, reason)
+
+─────────────────────────────────────────────────────────────
+5. /admin/withdraws/page.tsx (Duyệt rút tiền)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - usePendingWithdraws(params)
+  - useApproveWithdraw()
+  - useRejectWithdraw()
+
+Components:
+  - WithdrawTable.tsx
+  - WithdrawDetailModal.tsx
+  - ApproveRejectButtons.tsx
+
+Forms:
+  - RejectWithdrawForm.tsx (input: reason)
+
+─────────────────────────────────────────────────────────────
+6. /admin/settlements/page.tsx (Đối soát)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useSettlementHistory(params)
+  - useRunSettlement()
+  - useAutoReleasePayments() [OPTIONAL]
+
+Components:
+  - SettlementTable.tsx
+  - RunSettlementButton.tsx
+  - AutoReleaseButton.tsx
+
+Forms:
+  - RunSettlementForm.tsx (inputs: period, ownerId[optional])
+
+─────────────────────────────────────────────────────────────
+7. /admin/disputes/page.tsx (Khiếu nại)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useDisputes(params)
+  - useResolveDispute()
+
+Components:
+  - DisputeTable.tsx
+  - DisputeDetailModal.tsx
+  - DisputeMessages.tsx
+
+Forms:
+  - ResolveDisputeForm.tsx (inputs: resolution, status)
+
+─────────────────────────────────────────────────────────────
+8. /admin/promotions/page.tsx (Khuyến mãi)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - usePromotions(params)
+  - useCreatePromotion()
+  - useUpdatePromotion()
+
+Components:
+  - PromotionTable.tsx
+  - CreatePromotionModal.tsx
+  - EditPromotionModal.tsx
+
+Forms:
+  - CreatePromotionForm.tsx (inputs: code, description, discountType,
+    discountValue, maxUses, minBookingAmount, startDate, endDate)
+  - UpdatePromotionForm.tsx (same + isActive)
+
+─────────────────────────────────────────────────────────────
+9. /admin/settings/page.tsx (Hệ thống)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useCreateCategory()
+  - useCreateLocation()
+
+Components:
+  - CategoriesSection.tsx
+  - LocationsSection.tsx
+  - CreateCategoryModal.tsx
+  - CreateLocationModal.tsx
+
+Forms:
+  - CreateCategoryForm.tsx (inputs: name, description, imageUrl)
+  - CreateLocationForm.tsx (inputs: name, address, city, latitude, longitude)
+
+─────────────────────────────────────────────────────────────
+10. /admin/reports/page.tsx (Báo cáo)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useOverviewReport()
+  - useBookingsReport(params)
+  - useRevenueReport(params)
+
+Components:
+  - DateRangePicker.tsx
+  - OverviewStatsGrid.tsx
+  - BookingsChart.tsx
+  - RevenueChart.tsx
+
+Forms:
+  - DateRangeForm.tsx (inputs: from, to)
+
+─────────────────────────────────────────────────────────────
+11. /admin/users/page.tsx (Người dùng)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useUsers(params)
+  - useUpdateUserStatus()
+
+Components:
+  - UserTable.tsx
+  - UserStatusBadge.tsx
+  - ActivateDeactivateButtons.tsx
+
+Forms: KHÔNG CẦN
+
+─────────────────────────────────────────────────────────────
+12. /admin/audit-logs/page.tsx
+─────────────────────────────────────────────────────────────
+Hooks:
+  - useAuditLogs(params)
+
+Components:
+  - AuditLogTable.tsx
+  - LogDetailModal.tsx
+  - Pagination.tsx
+
+Forms: KHÔNG CẦN
+
+─────────────────────────────────────────────────────────────
+13. /admin/bookings/page.tsx (OPTIONAL - Xem tất cả bookings)
+─────────────────────────────────────────────────────────────
+Hooks:
+  - Sử dụng endpoint: AdminService.getAllBookings(params)
+    [Backend có: GET /api/admin/bookings/all]
+
+Components:
+  - AllBookingsTable.tsx
+  - BookingDetailModal.tsx
+
+Forms: KHÔNG CẦN
+
+
+================================================================
+TỔNG KẾT
+================================================================
+
+CUSTOMER: 10 pages
+  - Có form: 6 pages
+  - Không form: 4 pages
+
+OWNER: 10 pages  
+  - Có form: 6 pages
+  - Không form: 4 pages
+  - Dùng chung Customer: 2 pages (KYC, Profile)
+
+ADMIN: 13 pages
+  - Có form: 7 pages
+  - Không form: 6 pages
+
+TOTAL: 33 pages
+  - Có form: 19 pages
+  - Không form: 14 pages
+
+
+================================================================
+HOOKS CẦN THÊM (Frontend missing)
+================================================================
+
+CUSTOMER:
+  ✓ useMyReviews(params) → customer.queries.ts
+
+OWNER:
+  ✓ useCalendar(carId, params) → owner.queries.ts
+  ✓ useBlockCalendar() → owner.queries.ts
+  ✓ useOwnerTransactions(params) → owner.queries.ts
+  ✓ useSubmitCarForReview() → owner.queries.ts
+
+ADMIN:
+  ✓ useAutoReleasePayments() → admin.queries.ts [OPTIONAL]
+
+
+================================================================
+FORMS CẦN TẠO (Total: 26 forms)
+================================================================
+
+CUSTOMER (8 forms):
+  1. SearchFiltersForm.tsx
+  2. ApplyPromotionForm.tsx
+  3. CreatePaymentForm.tsx
+  4. WalletTopupForm.tsx
+  5. UpdateProfileForm.tsx
+  6. SubmitKYCForm.tsx
+  7. CreateReviewForm.tsx
+  8. CancelBookingConfirmDialog.tsx
+
+OWNER (8 forms):
+  1. SubmitKYCForm.tsx [TÁI SỬ DỤNG]
+  2. CreateCarForm.tsx
+  3. UpdateCarForm.tsx
+  4. BlockDateForm.tsx
+  5. RejectBookingForm.tsx
+  6. CheckinForm.tsx
+  7. CheckoutForm.tsx
+  8. WithdrawRequestForm.tsx
+  9. UpdateProfileForm.tsx [TÁI SỬ DỤNG]
+
+ADMIN (10 forms):
+  1. RejectKYCForm.tsx
+  2. ReleasePaymentForm.tsx
+  3. RefundPaymentForm.tsx
+  4. RejectWithdrawForm.tsx
+  5. RunSettlementForm.tsx
+  6. ResolveDisputeForm.tsx
+  7. CreatePromotionForm.tsx
+  8. UpdatePromotionForm.tsx
+  9. CreateCategoryForm.tsx
+  10. CreateLocationForm.tsx
+  11. DateRangeForm.tsx
+
+
+================================================================
+SHARED COMPONENTS (Có thể tái sử dụng)
+================================================================
+
+Common:
+  - Pagination.tsx
+  - StatusBadge.tsx
+  - LoadingSpinner.tsx
+  - EmptyState.tsx
+  - ConfirmDialog.tsx
+  - Toast/Notification.tsx
+  - DataTable.tsx
+  - SearchInput.tsx
+
+Wallet:
+  - WalletBalanceCard.tsx (Customer + Owner)
+  - TransactionTable.tsx (Customer + Owner)
+
+Profile:
+  - ProfileInfoCard.tsx (Customer + Owner)
+  - AvatarUpload.tsx (Customer + Owner)
+
+KYC:
+  - KYCStatusBadge.tsx (Customer + Owner + Admin)
+  - ImagePreview.tsx (Customer + Owner + Admin)

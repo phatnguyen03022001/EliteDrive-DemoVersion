@@ -1,0 +1,99 @@
+# CAR RENTAL PLATFORM - DANH SÁCH API ENDPOINTS ĐẦY ĐỦ
+
+## GUEST (CHƯA ĐĂNG NHẬP) 19 API
+
+GET /api/home
+GET /api/promotions
+GET /api/reviews/summary
+GET /api/cars
+GET /api/cars/{car_id}
+GET /api/cars/{car_id}/availability
+GET /api/cars/{car_id}/reviews
+GET /api/blogs
+GET /api/blogs/{slug}
+POST /api/auth/register
+POST /api/auth/send-register-otp
+POST /api/auth/resend-register-otp
+POST /api/auth/login
+POST /api/auth/send-login-otp
+POST /api/auth/resend-login-otp
+POST /api/auth/forgot-password
+POST /api/auth/send-forgot-password-otp
+POST /api/auth/resend-forgot-password-otp
+POST /api/auth/refresh-token
+
+---
+
+## CUSTOMER (KHÁCH THUÊ) 19 API
+
+GET /api/customer/profile
+PUT /api/customer/profile
+POST /api/customer/kyc
+GET /api/customer/kyc/status
+POST /api/bookings
+GET /api/bookings
+GET /api/bookings/{booking_id}
+POST /api/payments/create
+POST /api/payments/confirm
+GET /api/payments/{booking_id}
+GET /api/trips
+GET /api/trips/{trip_id}/status
+GET /api/contracts/{booking_id}
+POST /api/contracts/{booking_id}/sign
+GET /api/wallet
+GET /api/wallet/transactions
+POST /api/wallet/refund
+POST /api/reviews
+GET /api/reviews/my
+
+---
+
+## OWNER (CHỦ XE) 17 API
+
+POST /api/owner/cars
+GET /api/owner/cars
+PUT /api/owner/cars/{car_id}
+DELETE /api/owner/cars/{car_id}
+POST /api/owner/cars/{car_id}/documents
+GET /api/owner/cars/{car_id}/documents
+POST /api/owner/cars/{car_id}/pricing
+POST /api/owner/cars/{car_id}/calendar/block
+GET /api/owner/cars/{car_id}/calendar
+GET /api/owner/bookings
+POST /api/owner/bookings/{booking_id}/approve
+POST /api/owner/bookings/{booking_id}/reject
+POST /api/owner/trips/{trip_id}/checkin
+POST /api/owner/trips/{trip_id}/checkout
+GET /api/owner/earnings
+GET /api/owner/transactions
+POST /api/owner/withdraw
+
+---
+
+## ADMIN (QUẢN TRỊ) 17 API
+
+GET /api/admin/kyc/customers
+POST /api/admin/kyc/customers/{user_id}/approve
+POST /api/admin/kyc/customers/{user_id}/reject
+GET /api/admin/cars/pending
+POST /api/admin/cars/{car_id}/approve
+GET /api/admin/payments
+POST /api/admin/settlements/run
+GET /api/admin/settlements/history
+GET /api/admin/disputes
+POST /api/admin/disputes/{dispute_id}/resolve
+POST /api/admin/promotions
+GET /api/admin/promotions
+POST /api/admin/categories
+POST /api/admin/locations
+GET /api/admin/reports/overview
+GET /api/admin/reports/bookings
+GET /api/admin/reports/revenue
+
+---
+
+## COMMON / SHARED 3 API
+
+POST /api/uploads
+GET /api/notifications
+POST /api/notifications/read

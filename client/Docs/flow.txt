@@ -1,0 +1,62 @@
+1️⃣ Guest
+
+Xem xe, giá, blog
+
+Đăng ký / đăng nhập
+
+2️⃣ Customer
+KYC 
+
+Chọn xe → tạo Booking (PENDING)
+
+Owner approve → BOOKING_APPROVED
+
+Thanh toán → tiền vào Platform Wallet
+
+PAYMENT = HELD
+
+Ký hợp đồng → BOOKING_CONFIRMED
+
+Nhận xe → TRIP_ONGOING
+
+Trả xe → TRIP_COMPLETED
+
+Chờ settlement
+
+Có dispute → admin xử lý
+
+Review xe
+
+3️⃣ Owner
+
+KYC + tạo xe (PENDING)
+
+Admin duyệt xe
+
+Nhận booking → approve / reject
+
+Trip hoàn tất
+
+Chờ admin/system release escrow
+
+Tiền vào Owner Wallet
+
+Rút tiền
+
+4️⃣ Admin (Escrow)
+
+Duyệt KYC / xe
+
+Giữ tiền (Platform Wallet)
+
+Theo dõi trip
+
+Resolve dispute
+
+Settlement:
+
+Trừ phí
+
+Release tiền cho owner
+
+Báo cáo / audit

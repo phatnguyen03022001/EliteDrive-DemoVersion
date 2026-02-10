@@ -1,0 +1,185 @@
+CAR RENTAL PLATFORM – FULL DTO → API MAPPING (75 APIs)
+
+====================================
+AUTH / GUEST
+====================================
+
+register.dto.ts
+- POST /api/auth/register
+
+register-otp.dto.ts
+- POST /api/auth/send-register-otp
+- POST /api/auth/resend-register-otp
+
+login.dto.ts
+- POST /api/auth/login
+
+login-otp.dto.ts
+- POST /api/auth/send-login-otp
+- POST /api/auth/resend-login-otp
+
+forgot-password.dto.ts
+- POST /api/auth/forgot-password
+- POST /api/auth/send-forgot-password-otp
+- POST /api/auth/resend-forgot-password-otp
+
+refresh-token.dto.ts
+- POST /api/auth/refresh-token
+
+
+====================================
+HOME / PUBLIC
+====================================
+
+home-query.dto.ts
+- GET /api/home
+
+promotion-query.dto.ts
+- GET /api/promotions
+
+blog-query.dto.ts
+- GET /api/blogs
+- GET /api/blogs/{slug}
+
+public-car-query.dto.ts
+- GET /api/cars
+- GET /api/cars/{car_id}
+- GET /api/cars/{car_id}/availability
+- GET /api/cars/{car_id}/reviews
+
+review-summary.dto.ts
+- GET /api/reviews/summary
+
+
+====================================
+CUSTOMER
+====================================
+
+customer-profile.dto.ts
+- GET /api/customer/profile
+- PUT /api/customer/profile
+
+customer-kyc.dto.ts
+- POST /api/customer/kyc
+- GET  /api/customer/kyc/status
+
+booking-create.dto.ts
+- POST /api/bookings
+
+booking-query.dto.ts
+- GET /api/bookings
+- GET /api/bookings/{booking_id}
+
+payment.dto.ts
+- POST /api/payments/create
+- POST /api/payments/confirm
+- GET  /api/payments/{booking_id}
+
+trip-query.dto.ts
+- GET /api/trips
+- GET /api/trips/{trip_id}/status
+
+contract.dto.ts
+- GET  /api/contracts/{booking_id}
+- POST /api/contracts/{booking_id}/sign
+
+wallet.dto.ts
+- GET  /api/wallet
+- GET  /api/wallet/transactions
+- POST /api/wallet/refund
+
+customer-review.dto.ts
+- POST /api/reviews
+- GET  /api/reviews/my
+
+
+====================================
+OWNER
+====================================
+
+owner-car.dto.ts
+- POST   /api/owner/cars
+- GET    /api/owner/cars
+- PUT    /api/owner/cars/{car_id}
+- DELETE /api/owner/cars/{car_id}
+
+owner-car-document.dto.ts
+- POST /api/owner/cars/{car_id}/documents
+- GET  /api/owner/cars/{car_id}/documents
+
+owner-car-pricing.dto.ts
+- POST /api/owner/cars/{car_id}/pricing
+
+owner-car-calendar.dto.ts
+- POST /api/owner/cars/{car_id}/calendar/block
+- GET  /api/owner/cars/{car_id}/calendar
+
+owner-booking-action.dto.ts
+- GET  /api/owner/bookings
+- POST /api/owner/bookings/{booking_id}/approve
+- POST /api/owner/bookings/{booking_id}/reject
+
+owner-trip-action.dto.ts
+- POST /api/owner/trips/{trip_id}/checkin
+- POST /api/owner/trips/{trip_id}/checkout
+
+owner-finance.dto.ts
+- GET  /api/owner/earnings
+- GET  /api/owner/transactions
+- POST /api/owner/withdraw
+
+
+====================================
+ADMIN
+====================================
+
+admin-kyc.dto.ts
+- GET  /api/admin/kyc/customers
+- POST /api/admin/kyc/customers/{user_id}/approve
+- POST /api/admin/kyc/customers/{user_id}/reject
+
+admin-car-approval.dto.ts
+- GET  /api/admin/cars/pending
+- POST /api/admin/cars/{car_id}/approve
+
+admin-payment.dto.ts
+- GET  /api/admin/payments
+- POST /api/admin/settlements/run
+- GET  /api/admin/settlements/history
+
+admin-dispute.dto.ts
+- GET  /api/admin/disputes
+- POST /api/admin/disputes/{dispute_id}/resolve
+
+admin-promotion.dto.ts
+- POST /api/admin/promotions
+- GET  /api/admin/promotions
+
+admin-master-data.dto.ts
+- POST /api/admin/categories
+- POST /api/admin/locations
+
+admin-report.dto.ts
+- GET /api/admin/reports/overview
+- GET /api/admin/reports/bookings
+- GET /api/admin/reports/revenue
+
+
+====================================
+COMMON / SHARED
+====================================
+
+upload.dto.ts
+- POST /api/uploads
+
+notification.dto.ts
+- GET  /api/notifications
+- POST /api/notifications/read
+
+
+====================================
+FINAL SUMMARY
+====================================
+TOTAL API : 75
+DTO FILES : 24
+STATUS    : FULL – NO MISSING API ✅

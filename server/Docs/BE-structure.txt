@@ -1,0 +1,130 @@
+src/
+├── common/                          # Dùng chung toàn dự án
+│   ├── decorators/
+│   │   ├── roles.decorator.ts       # @Roles(UserRole.CUSTOMER, ...)
+│   │   ├── public.decorator.ts      # @Public() - bypass auth
+│   │   └── current-user.decorator.ts# @CurrentUser() => User object
+│   │
+│   ├── guards/
+│   │   ├── jwt-auth.guard.ts        # Validate JWT token
+│   │   └── roles.guard.ts           # Check @Roles()
+│   │
+│   ├── interceptors/
+│   │   └── response.interceptor.ts  # Format response chung
+│   │
+│   ├── pipes/
+│   │   └── validation.pipe.ts       # Validate DTO
+│   │
+│   ├── dto/
+│   │   ├── pagination.dto.ts
+│   │   └── response.dto.ts
+│   │
+│   ├── constants/
+│   └── status.enum.ts
+│   │
+│   └── utils/
+│       └── helpers.ts
+│
+├── config/
+│   ├── database.config.ts
+│   ├── jwt.config.ts
+│   └── app.config.ts
+│
+├── modules/
+│
+│   ├── auth/                     # AUTH / GUEST (10)
+│   │   ├── auth.controller.ts
+│   │   ├── auth.service.ts
+│   │   ├── auth.module.ts
+│   │   └── dto/
+│   │       ├── register.dto.ts
+│   │       ├── register-otp.dto.ts
+│   │       ├── login.dto.ts
+│   │       ├── login-otp.dto.ts
+│   │       ├── forgot-password.dto.ts
+│   │       └── refresh-token.dto.ts
+│
+│   ├── home/                     # HOME (1)
+│   │   ├── home.controller.ts
+│   │   ├── home.service.ts
+│   │   ├── home.module.ts
+│   │   └── dto/home-query.dto.ts
+│
+│   ├── public/                   # PUBLIC (8)
+│   │   ├── public-car.controller.ts
+│   │   ├── public-blog.controller.ts
+│   │   ├── public-promotion.controller.ts
+│   │   ├── public-review.controller.ts
+│   │   ├── public.module.ts
+│   │   └── dto/
+│   │       ├── public-car-query.dto.ts
+│   │       ├── blog-query.dto.ts
+│   │       ├── promotion-query.dto.ts
+│   │       └── review-summary.dto.ts
+│
+│   ├── customer/                 # CUSTOMER (19)
+│   │   ├── customer.controller.ts
+│   │   ├── customer.service.ts
+│   │   ├── customer.module.ts
+│   │   └── dto/
+│   │       ├── customer-profile.dto.ts
+│   │       ├── customer-kyc.dto.ts
+│   │       ├── booking-create.dto.ts
+│   │       ├── booking-query.dto.ts
+│   │       ├── payment.dto.ts
+│   │       ├── trip-query.dto.ts
+│   │       ├── contract.dto.ts
+│   │       ├── wallet.dto.ts
+│   │       └── customer-review.dto.ts
+│
+│   ├── owner/                    # OWNER (17)
+│   │   ├── owner-car.controller.ts
+│   │   ├── owner-booking.controller.ts
+│   │   ├── owner-trip.controller.ts
+│   │   ├── owner-finance.controller.ts
+│   │   ├── owner.service.ts
+│   │   ├── owner.module.ts
+│   │   └── dto/
+│   │       ├── owner-car.dto.ts
+│   │       ├── owner-car-document.dto.ts
+│   │       ├── owner-car-pricing.dto.ts
+│   │       ├── owner-car-calendar.dto.ts
+│   │       ├── owner-booking-action.dto.ts
+│   │       ├── owner-trip-action.dto.ts
+│   │       └── owner-finance.dto.ts
+│
+│   ├── admin/                    # ADMIN (17)
+│   │   ├── admin-kyc.controller.ts
+│   │   ├── admin-car.controller.ts
+│   │   ├── admin-payment.controller.ts
+│   │   ├── admin-dispute.controller.ts
+│   │   ├── admin-promotion.controller.ts
+│   │   ├── admin-master-data.controller.ts
+│   │   ├── admin-report.controller.ts
+│   │   ├── admin.service.ts
+│   │   ├── admin.module.ts
+│   │   └── dto/
+│   │       ├── admin-kyc.dto.ts
+│   │       ├── admin-car-approval.dto.ts
+│   │       ├── admin-payment.dto.ts
+│   │       ├── admin-dispute.dto.ts
+│   │       ├── admin-promotion.dto.ts
+│   │       ├── admin-master-data.dto.ts
+│   │       └── admin-report.dto.ts
+│
+│   ├── upload/                   # COMMON
+│   │   ├── upload.controller.ts
+│   │   ├── upload.service.ts
+│   │   └── upload.module.ts
+│
+│   └── notification/             # COMMON
+│       ├── notification.controller.ts
+│       ├── notification.service.ts
+│       └── notification.module.ts
+│
+├── database/
+│   └── prisma.service.ts            # PrismaService
+│
+├── app.module.ts
+├── app.controller.ts
+└── main.ts

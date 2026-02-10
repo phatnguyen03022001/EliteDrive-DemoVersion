@@ -1,0 +1,119 @@
+src/
+├── app/                          # App Router
+│   ├── (auth)/                   # Group route không hiển thị trong URL
+│   │   ├── login/
+│   │   │   └── page.tsx
+│   │   ├── register/
+│   │   │   └── page.tsx
+│   │   ├── forgot-password/
+│   │   │   └── page.tsx
+│   │   └── otp/                  # chung cho register & login & forgot
+│   │       └── page.tsx
+│   │
+│   ├── (customer)/               # Layout riêng cho customer (sau login)
+│   │   ├── layout.tsx
+│   │   ├── dashboard/
+│   │   ├── profile/
+│   │   ├── bookings/
+│   │   │   ├── [id]/
+│   │   │   │   └── page.tsx
+│   │   │   └── page.tsx
+│   │   ├── trips/
+│   │   ├── wallet/
+│   │   └── reviews/
+│   │
+│   ├── (owner)/                  # Layout riêng cho chủ xe
+│   │   ├── layout.tsx
+│   │   ├── cars/
+│   │   │   ├── [id]/
+│   │   │   │   └── page.tsx
+│   │   │   ├── new/
+│   │   │   └── page.tsx
+│   │   ├── bookings/
+│   │   ├── earnings/
+│   │   └── withdraw/
+│   │
+│   ├── admin/                    # Layout admin (có thể tách domain riêng sau này)
+│   │   ├── layout.tsx
+│   │   ├── dashboard/
+│   │   ├── kyc/
+│   │   ├── cars/
+│   │   ├── payments/
+│   │   ├── disputes/
+│   │   └── reports/
+│   │
+│   ├── api/                      # Route Handlers (nếu cần server action hoặc proxy)
+│   ├── layout.tsx                # Root layout
+│   ├── page.tsx                  # Home page (public)
+│   ├── cars/
+│   │   ├── [id]/
+│   │   │   └── page.tsx
+│   │   └── page.tsx
+│   ├── blogs/
+│   │   ├── [slug]/
+│   │   │   └── page.tsx
+│   │   └── page.tsx
+│   └── promotions/
+│       └── page.tsx
+│
+├── components/
+│   ├── ui/                       # shadcn components
+│   ├── layout/                   # Header, Footer, Sidebar, MobileNav...
+│   │   ├── customer/
+│   │   ├── owner/
+│   │   └── admin/
+│   ├── auth/
+│   ├── car/
+│   ├── booking/
+│   ├── wallet/
+│   └── common/                   # ButtonLoading, EmptyState, ErrorCard...
+│
+├── features/                     # ← Feature-based chính (tổ chức theo business domain)
+│   ├── auth/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── queries/
+│   │   ├── types/
+│   │   └── services/
+│   │
+│   ├── home/
+│   │   ├── components/
+│   │   ├── queries/
+│   │   └── services/
+│   │
+│   ├── customer/
+│   │   ├── profile/
+│   │   ├── booking/
+│   │   ├── kyc/
+│   │   ├── wallet/
+│   │   └── review/
+│   │
+│   ├── owner/
+│   │   ├── car/
+│   │   ├── booking/
+│   │   ├── trip/
+│   │   └── finance/
+│   │
+│   ├── admin/
+│   │   ├── kyc/
+│   │   ├── car/
+│   │   ├── payment/
+│   │   ├── dispute/
+│   │   └── report/
+│   │
+│   └── shared/                   # hook, util, types dùng chung nhiều feature
+│       ├── hooks/
+│       ├── utils/
+│       └── types/
+│
+├── lib/
+│   ├── axios.ts                  # axios instance + interceptors
+│   ├── query-client.ts           # TanStack Query client config
+│   ├── auth.ts                   # getSession, token logic
+│   └── constants.ts
+│
+├── types/
+│   └── index.ts                  # global types nếu cần
+│
+└── styles/
+    └── globals.css

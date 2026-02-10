@@ -1,0 +1,1345 @@
+[
+  {
+    "endpoint": "/api/auth/register",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "email",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "password",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "otp",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "firstName",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "lastName",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "phone",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "role",
+        "type": "string",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/auth/otp/register",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "email",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/auth/verify-register-otp",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "email",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "code",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/auth/login",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "email",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "password",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/auth/otp/login",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "email",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/auth/verify-login-otp",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "email",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "code",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/auth/forgot-password",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "email",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "code",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "newPassword",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/auth/otp/forgot-password",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "email",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/auth/verify-forgot-otp",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "email",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "code",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/admin/reports/overview",
+    "method": "GET",
+    "summary": "Báo cáo tổng quan hệ thống",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/admin/reports/bookings",
+    "method": "GET",
+    "summary": "Báo cáo số lượng đơn đặt xe",
+    "bodyFields": [],
+    "queryFields": [
+      {
+        "name": "from",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "to",
+        "type": "string",
+        "status": "OPTIONAL"
+      }
+    ]
+  },
+  {
+    "endpoint": "/api/admin/reports/revenue",
+    "method": "GET",
+    "summary": "Báo cáo doanh thu",
+    "bodyFields": [],
+    "queryFields": [
+      {
+        "name": "from",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "to",
+        "type": "string",
+        "status": "OPTIONAL"
+      }
+    ]
+  },
+  {
+    "endpoint": "/api/admin/cars/pending",
+    "method": "GET",
+    "summary": "Danh sách xe chờ duyệt",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/admin/cars/{car_id}/approve",
+    "method": "POST",
+    "summary": "Phê duyệt xe lên hệ thống",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/admin/kyc/customers",
+    "method": "GET",
+    "summary": "Danh sách khách hàng chờ duyệt KYC",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/admin/kyc/customers/{user_id}/approve",
+    "method": "POST",
+    "summary": "Phê duyệt KYC",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/admin/kyc/customers/{user_id}/reject",
+    "method": "POST",
+    "summary": "Từ chối KYC",
+    "bodyFields": [
+      {
+        "name": "rejectionReason",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/admin/promotions",
+    "method": "POST",
+    "summary": "Tạo mã khuyến mãi mới",
+    "bodyFields": [
+      {
+        "name": "code",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "discountType",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "discountValue",
+        "type": "number",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "maxUses",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "minBookingAmount",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "startDate",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "endDate",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/admin/promotions",
+    "method": "GET",
+    "summary": "Danh sách mã khuyến mãi",
+    "bodyFields": [],
+    "queryFields": [
+      {
+        "name": "isActive",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "page",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "status": "OPTIONAL"
+      }
+    ]
+  },
+  {
+    "endpoint": "/api/admin/promotions/{id}",
+    "method": "PATCH",
+    "summary": "Cập nhật mã khuyến mãi",
+    "bodyFields": [
+      {
+        "name": "code",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "discountType",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "discountValue",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "maxUses",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "minBookingAmount",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "startDate",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "endDate",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "isActive",
+        "type": "boolean",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/admin/payments",
+    "method": "GET",
+    "summary": "Lịch sử giao dịch thanh toán",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/admin/settlements/run",
+    "method": "POST",
+    "summary": "Chạy quyết toán định kỳ",
+    "bodyFields": [
+      {
+        "name": "period",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "ownerId",
+        "type": "string",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/admin/settlements/history",
+    "method": "GET",
+    "summary": "Lịch sử quyết toán",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/admin/disputes",
+    "method": "GET",
+    "summary": "Danh sách khiếu nại",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/admin/disputes/{dispute_id}/resolve",
+    "method": "POST",
+    "summary": "Giải quyết khiếu nại",
+    "bodyFields": [
+      {
+        "name": "resolution",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "status",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/admin/categories",
+    "method": "POST",
+    "summary": "Thêm danh mục xe mới",
+    "bodyFields": [
+      {
+        "name": "name",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "imageUrl",
+        "type": "string",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/admin/locations",
+    "method": "POST",
+    "summary": "Thêm địa điểm hoạt động mới",
+    "bodyFields": [
+      {
+        "name": "name",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "address",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "city",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "latitude",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "longitude",
+        "type": "number",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/profile",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/profile",
+    "method": "PUT",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "firstName",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "lastName",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "phone",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "avatar",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "licenseNumber",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "licenseExpiry",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "dateOfBirth",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "address",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "city",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "country",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "postalCode",
+        "type": "string",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/kyc",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "documentType",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "documentNumber",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "documentImageUrl",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "faceImageUrl",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/kyc/status",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/bookings",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "carId",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "startDate",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "endDate",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "pickupLocation",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "dropoffLocation",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "notes",
+        "type": "string",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/bookings",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/bookings/{booking_id}",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/bookings/{booking_id}/cancel",
+    "method": "PUT",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/payments/create",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "bookingId",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "paymentMethod",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/payments/confirm",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "bookingId",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "transactionId",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/payments/{booking_id}",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/trips",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/trips/{trip_id}/status",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/contracts/{booking_id}",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/contracts/{booking_id}/sign",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "signatureData",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/wallet",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/wallet/transactions",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/wallet/refund",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "bookingId",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "amount",
+        "type": "number",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "reason",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/reviews",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "carId",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "bookingId",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "rating",
+        "type": "number",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "content",
+        "type": "string",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/customer/reviews/my",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/owner/cars",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "name",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "brand",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "model",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "year",
+        "type": "number",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "licensePlate",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "transmission",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "fuelType",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "seatCount",
+        "type": "number",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "pricePerDay",
+        "type": "number",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "pricePerHour",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "categoryId",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "locationId",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "mainImageUrl",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "imageUrls",
+        "type": "array",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/owner/cars",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": [
+      {
+        "name": "page",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "limit",
+        "type": "number",
+        "status": "OPTIONAL"
+      }
+    ]
+  },
+  {
+    "endpoint": "/api/owner/cars/{car_id}",
+    "method": "PUT",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "name",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "brand",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "model",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "year",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "licensePlate",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "transmission",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "fuelType",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "seatCount",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "pricePerDay",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "pricePerHour",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "categoryId",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "locationId",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "mainImageUrl",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "imageUrls",
+        "type": "array",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "isAvailable",
+        "type": "boolean",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/owner/cars/{car_id}",
+    "method": "DELETE",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/owner/cars/{car_id}/documents",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "documentType",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "documentUrl",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "expiryDate",
+        "type": "string",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/owner/cars/{car_id}/documents",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/owner/cars/{car_id}/pricing",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "pricePerDay",
+        "type": "number",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "pricePerHour",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "pricePerWeek",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "pricePerMonth",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "discountPercentage",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "effectiveFrom",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "effectiveTo",
+        "type": "string",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/owner/cars/{car_id}/calendar/block",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "date",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "blockedReason",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "isBlocked",
+        "type": "boolean",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/owner/cars/{car_id}/calendar",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": [
+      {
+        "name": "page",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "limit",
+        "type": "number",
+        "status": "OPTIONAL"
+      }
+    ]
+  },
+  {
+    "endpoint": "/api/owner/bookings",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/owner/bookings/{booking_id}/approve",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/owner/bookings/{booking_id}/reject",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "reason",
+        "type": "string",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/owner/finance/earnings",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": [
+      {
+        "name": "page",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "limit",
+        "type": "number",
+        "status": "OPTIONAL"
+      }
+    ]
+  },
+  {
+    "endpoint": "/api/owner/finance/transactions",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": [
+      {
+        "name": "page",
+        "type": "number",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "limit",
+        "type": "number",
+        "status": "OPTIONAL"
+      }
+    ]
+  },
+  {
+    "endpoint": "/api/owner/finance/withdraw",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "amount",
+        "type": "number",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "bankAccountNumber",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "bankAccountName",
+        "type": "string",
+        "status": "OPTIONAL"
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/notifications",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/notifications/read",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "notificationId",
+        "type": "string",
+        "status": "REQUIRED"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/uploads",
+    "method": "POST",
+    "summary": "",
+    "bodyFields": [
+      {
+        "name": "fileName",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "fileUrl",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "fileType",
+        "type": "string",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "fileSize",
+        "type": "number",
+        "status": "REQUIRED"
+      },
+      {
+        "name": "uploadedBy",
+        "type": "string",
+        "status": "OPTIONAL"
+      }
+    ],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/home",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/promotions",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/blogs",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/blogs/{slug}",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/cars",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/cars/{car_id}",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/cars/{car_id}/availability",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/cars/{car_id}/reviews",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  },
+  {
+    "endpoint": "/api/reviews/summary",
+    "method": "GET",
+    "summary": "",
+    "bodyFields": [],
+    "queryFields": []
+  }
+]

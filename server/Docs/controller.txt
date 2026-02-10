@@ -1,0 +1,188 @@
+AUTH (9): modules/auth/auth.controller.ts
+
+POST /api/auth/register
+POST /api/auth/otp/register
+POST /api/auth/verify-register-otp
+
+POST /api/auth/login
+POST /api/auth/otp/login
+POST /api/auth/verify-login-otp
+
+POST /api/auth/forgot-password
+POST /api/auth/otp/forgot-password
+POST /api/auth/verify-forgot-otp
+
+===================================
+
+HOME (9) → modules/home/*
+
+public-car.controller.ts (4)
+
+GET /api/cars
+
+GET /api/cars/:car_id
+
+GET /api/cars/:car_id/availability
+
+GET /api/cars/:car_id/reviews
+
+public-blog.controller.ts (2)
+
+GET /api/blogs
+
+GET /api/blogs/:slug
+
+public-promotion.controller.ts (1)
+
+GET /api/promotions
+
+public-review.controller.ts (1)
+
+GET /api/reviews/summary
+
+modules/home/home.controller.ts
+
+GET /api/home
+
+CUSTOMER (19) → modules/customer/customer.controller.ts
+
+GET /api/customer/profile
+
+PUT /api/customer/profile
+
+POST /api/customer/kyc
+
+GET /api/customer/kyc/status
+
+POST /api/bookings
+
+GET /api/bookings
+
+GET /api/bookings/:booking_id
+
+POST /api/payments/create
+
+POST /api/payments/confirm
+
+GET /api/payments/:booking_id
+
+GET /api/trips
+
+GET /api/trips/:trip_id/status
+
+GET /api/contracts/:booking_id
+
+POST /api/contracts/:booking_id/sign
+
+GET /api/wallet
+
+GET /api/wallet/transactions
+
+POST /api/wallet/refund
+
+POST /api/reviews
+
+GET /api/reviews/my
+
+OWNER (17) → modules/owner/*
+
+owner-car.controller.ts (9)
+
+POST /api/owner/cars
+
+GET /api/owner/cars
+
+PUT /api/owner/cars/:car_id
+
+DELETE /api/owner/cars/:car_id
+
+POST /api/owner/cars/:car_id/documents
+
+GET /api/owner/cars/:car_id/documents
+
+POST /api/owner/cars/:car_id/pricing
+
+POST /api/owner/cars/:car_id/calendar/block
+
+GET /api/owner/cars/:car_id/calendar
+
+owner-booking.controller.ts (3)
+
+GET /api/owner/bookings
+
+POST /api/owner/bookings/:booking_id/approve
+
+POST /api/owner/bookings/:booking_id/reject
+
+owner-trip.controller.ts (2)
+
+POST /api/owner/trips/:trip_id/checkin
+
+POST /api/owner/trips/:trip_id/checkout
+
+owner-finance.controller.ts (3)
+
+GET /api/owner/earnings
+
+GET /api/owner/transactions
+
+POST /api/owner/withdraw
+
+ADMIN (17) → modules/admin/*
+admin-kyc.controller.ts (3)
+
+GET /api/admin/kyc/customers
+
+POST /api/admin/kyc/customers/:user_id/approve
+
+POST /api/admin/kyc/customers/:user_id/reject
+
+admin-car.controller.ts (2)
+
+GET /api/admin/cars/pending
+
+POST /api/admin/cars/:car_id/approve
+
+admin-payment.controller.ts (3)
+
+GET /api/admin/payments
+
+POST /api/admin/settlements/run
+
+GET /api/admin/settlements/history
+
+admin-dispute.controller.ts (2)
+
+GET /api/admin/disputes
+
+POST /api/admin/disputes/:dispute_id/resolve
+
+admin-promotion.controller.ts (2)
+
+POST /api/admin/promotions
+
+GET /api/admin/promotions
+
+admin-master-data.controller.ts (2)
+
+POST /api/admin/categories
+
+POST /api/admin/locations
+
+admin-report.controller.ts (3)
+
+GET /api/admin/reports/overview
+
+GET /api/admin/reports/bookings
+
+GET /api/admin/reports/revenue
+
+NOTIFICATION (2) → modules/notification/notification.controller.ts
+
+GET /api/notifications
+
+POST /api/notifications/read
+
+UPLOAD (1) → modules/upload/upload.controller.ts
+
+POST /api/uploads
