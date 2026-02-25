@@ -45,10 +45,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: [
-      'http://localhost:3000',
-      process.env.FRONTEND_URL, // Thêm biến này vào Render/Vercel
-    ].filter(Boolean),
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Authorization, Accept',
