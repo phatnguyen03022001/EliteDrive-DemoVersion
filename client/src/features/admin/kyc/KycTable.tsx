@@ -23,7 +23,9 @@ export function KycTable({ items }: { items: KYCItem[] }) {
               {item.user.firstName} {item.user.lastName}
             </td>
             <td className="p-2">{item.status}</td>
-            <td className="p-2">{item.status === KYCStatus.enum.PENDING && <KycActions userId={item.userId} />}</td>
+            <td className="p-2">
+              {item.status === KYCStatus.enum.PENDING && item.userId && <KycActions userId={item.userId} />}
+            </td>
           </tr>
         ))}
       </tbody>

@@ -1,53 +1,52 @@
-import { useMutation } from "@tanstack/react-query";
-import { authService } from "@/features/auth/auth.service";
-import { LoginRequest, RegisterPasswordBody, ForgotPasswordInput } from "@/features/auth/auth.schema";
+"use client";
 
-// Chuyển từ Object sang Custom Hook (bắt đầu bằng chữ 'use')
-export const useAuthQueries = () => {
-  // 1. Định nghĩa các mutation ở cấp cao nhất của Hook
-  const login = useMutation({
-    mutationFn: (payload: LoginRequest) => authService.login(payload),
-  });
+import { useSearchParams, useRouter } from "next/navigation";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { OtpForm } from "@/features/auth/components/OtpForm";
 
-  const register = useMutation({
-    mutationFn: (payload: RegisterPasswordBody) => authService.register(payload),
-  });
+// 1. Import đúng Hook tổng mà bạn đã định nghĩa
+import { useAuthQueries } from "@/features/auth/auth.queries";
 
-  const resetPassword = useMutation({
-    mutationFn: (payload: ForgotPasswordInput) => authService.resetPassword(payload),
-  });
+export default function OtpPage() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
-  // 2. Định nghĩa các mutation cho OTP
-  const sendRegisterOtp = useMutation({ mutationFn: (email: string) => authService.otp.send.register(email) });
-  const sendLoginOtp = useMutation({ mutationFn: (email: string) => authService.otp.send.login(email) });
-  const sendForgotOtp = useMutation({ mutationFn: (email: string) => authService.otp.send.forgot(email) });
+  // 2. Gọi Hook tổng để lấy các mutation ra
+  const authQueries = useAuthQueries();
 
-  const verifyRegisterOtp = useMutation({
-    mutationFn: ({ email, code }: { email: string; code: string }) => authService.otp.verify.register(email, code),
-  });
-  const verifyLoginOtp = useMutation({
-    mutationFn: ({ email, code }: { email: string; code: string }) => authService.otp.verify.login(email, code),
-  });
-  const verifyForgotOtp = useMutation({
-    mutationFn: ({ email, code }: { email: string; code: string }) => authService.otp.verify.forgot(email, code),
-  });
+  // Trích xuất các mutation verify từ object lồng nhau
+  const verifyRegisterOtp = authQueries.otp.verify.register;
+  const verifyLoginOtp = authQueries.otp.verify.login;
+  const verifyForgotOtp = authQueries.otp.verify.forgot;
 
-  // 3. Trả về cấu trúc object như cũ để các file khác không phải sửa nhiều
-  return {
-    login,
-    register,
-    resetPassword,
-    otp: {
-      send: {
-        register: sendRegisterOtp,
-        login: sendLoginOtp,
-        forgot: sendForgotOtp,
-      },
-      verify: {
-        register: verifyRegisterOtp,
-        login: verifyLoginOtp,
-        forgot: verifyForgotOtp,
-      },
-    },
+  const type = searchParams.get("type") as "register" | "login" | "forgot" | null;
+  const email = searchParams.get("email");
+
+  // Kiểm tra điều kiện
+  if (!type || !email || !["register", "login", "forgot"].includes(type)) {
+    router.replace("/auth/login");
+    return null;
+  }
+
+  // 3. Chọn mutation tương ứng
+  const verifyOtp = type === "register" ? verifyRegisterOtp : type === "login" ? verifyLoginOtp : verifyForgotOtp;
+
+  const titles = {
+    register: "Xác thực đăng ký",
+    login: "Xác thực đăng nhập",
+    forgot: "Xác thực đặt lại mật khẩu",
   };
-};
+
+  return (
+    <Card>
+      <CardHeader className="space-y-1">
+        <CardTitle className="text-2xl text-center">{titles[type]}</CardTitle>
+        <CardDescription className="text-center">
+          Mã OTP đã được gửi đến <strong>{email}</strong>
+        </CardDescription>
+      </CardHeader>
+
+      <OtpForm email={email} onVerify={(payload) => verifyOtp.mutate(payload)} isLoading={verifyOtp.isPending} />
+    </Card>
+  );
+}
