@@ -1,21 +1,21 @@
-# dependencies
+# --- Existing Gitignore ---
 node_modules/
 dist/
 .next/
-
-# env
+.DS_Store
 .env
 .env.*
-!.env.example
-
-# logs
-npm-debug.log*
-yarn-debug.log*
-pnpm-debug.log*
-
-# OS
-.DS_Store
-Thumbs.db
-
-# build cache
 tsconfig.tsbuildinfo
+
+# --- DATABASE & DOCKER DATA ---
+# Chặn toàn bộ dữ liệu database thực tế
+docker/mongodb/mongo-data/
+docker/garage/data/
+docker/garage/meta/
+
+# Chặn logs của MongoDB Shell
+docker/mongodb/mongo-data/.mongodb/
+
+# Logs chung
+*.log
+npm-debug.log*
