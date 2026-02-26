@@ -9,6 +9,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const logger = new Logger('Bootstrap');
 
+  app.setGlobalPrefix(process.env.API_PREFIX || 'api');
+
   // --- Đoạn kiểm tra kết nối Mongo ---
   try {
     const prismaService = app.get(PrismaService);
