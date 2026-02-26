@@ -3,8 +3,63 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { OtpForm } from "@/features/auth/components/OtpForm";
+import { useMutation } from "@tanstack/react-query"; // Đảm bảo đã import useMutation
+import axios from "axios"; // Hoặc library bạn dùng để call API
+import { toast } from "sonner"; // Hoặc thư viện thông báo của bạn
 
-import { useVerifyRegisterOtp, useVerifyLoginOtp, useVerifyForgotOtp } from "@/features/auth/queries/otp.queries";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://elitedrive-demoversion.onrender.com/api";
+
+const useVerifyRegisterOtp = () => {
+  const router = useRouter();
+  return useMutation({
+    mutationFn: async (payload: any) => {
+      const { data } = await axios.post(`${API_URL}/auth/otp/register`, payload);
+      return data;
+    },
+    onSuccess: () => {
+      toast.success("Xác thực đăng ký thành công!");
+      router.push("/auth/login");
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.message || "Lỗi xác thực OTP");
+    },
+  });
+};
+
+const useVerifyLoginOtp = () => {
+  const router = useRouter();
+  return useMutation({
+    mutationFn: async (payload: any) => {
+      const { data } = await axios.post(`${API_URL}/auth/otp/login`, payload);
+      return data;
+    },
+    onSuccess: (data) => {
+      toast.success("Đăng nhập thành công!");
+      // Lưu token vào cookie/localStorage ở đây nếu cần
+      router.push("/dashboard");
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.message || "OTP không chính xác");
+    },
+  });
+};
+
+const useVerifyForgotOtp = () => {
+  const router = useRouter();
+  return useMutation({
+    mutationFn: async (payload: any) => {
+      const { data } = await axios.post(`${API_URL}/auth/otp/forgot-password`, payload);
+      return data;
+    },
+    onSuccess: (data) => {
+      toast.success("Xác thực thành công. Hãy đặt lại mật khẩu!");
+      router.push(`/auth/reset-password?email=${data.email}&token=${data.token}`);
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.message || "Lỗi xác thực");
+    },
+  });
+};
 
 export default function OtpPage() {
   const searchParams = useSearchParams();
