@@ -43,21 +43,23 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
-
   const allowedOrigins = [
-    'http://localhost:3000', // Cho local dev
-    'https://elitedrive-demoversion.vercel.app', // Thay bằng domain Vercel thật của bạn
-    process.env.FRONTEND_URL, // Lấy từ biến môi trường trên Render
-  ].filter(Boolean); // Loại bỏ các giá trị undefined hoặc null
+    'http://localhost:3000',
+    'https://elite-drive-iota.vercel.app', // Đã sửa cho khớp với ảnh bạn gửi
+    process.env.FRONTEND_URL,
+  ].filter(Boolean);
 
   app.enableCors({
     origin: (origin, callback) => {
-      // Cho phép các request không có origin (như Postman hoặc Mobile app)
-      // hoặc origin nằm trong danh sách cho phép
-      if (!origin || allowedOrigins.includes(origin)) {
+      // Logic kiểm tra linh hoạt hơn
+      if (
+        !origin ||
+        allowedOrigins.includes(origin) ||
+        origin.endsWith('.vercel.app')
+      ) {
         callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'));
+        callback(new Error('CORS Error: Origin not allowed'));
       }
     },
     credentials: true,
