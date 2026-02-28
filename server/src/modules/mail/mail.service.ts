@@ -1,57 +1,57 @@
-import { Injectable } from '@nestjs/common';
-import { MailerService } from '@nestjs-modules/mailer';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import * as Brevo from '@getbrevo/brevo';
 
 @Injectable()
-export class MailService {
-  constructor(private mailerService: MailerService) {}
+export class MailService implements OnModuleInit {
+  private readonly logger = new Logger(MailService.name);
+  private apiInstance: Brevo.TransactionalEmailsApi;
 
-  async sendOtp(email: string, code: string, type: string) {
-    await this.mailerService.sendMail({
-      to: email,
-      subject: `Elite Drive – OTP Code (${type})`,
-      html: `
-      <div style="font-family: Arial, Helvetica, sans-serif; background:#f5f6fa; padding:24px">
-        <div style="max-width:520px; margin:auto; background:#ffffff; border-radius:8px; padding:32px">
+  constructor(private configService: ConfigService) {
+    this.apiInstance = new Brevo.TransactionalEmailsApi();
+  }
 
-          <div style="text-align:center; margin-bottom:24px">
-            <div style="
-              display:inline-block;
-              padding:14px 28px;
-              font-size:28px;
-              letter-spacing:6px;
-              font-weight:700;
-              color:#0f172a;
-              background:#f1f5f9;
-              border-radius:8px;
-            ">
-              ${code}
-            </div>
+  onModuleInit() {
+    const apiKey = this.configService.get<string>('BREVO_API_KEY');
+    this.apiInstance.setApiKey(
+      Brevo.TransactionalEmailsApiApiKeys.apiKey,
+      apiKey,
+    );
+  }
+
+  async sendOtp(email: string, code: string, type: string): Promise<void> {
+    const sendSmtpEmail = new Brevo.SendSmtpEmail();
+
+    sendSmtpEmail.subject = `Elite Drive – OTP Code (${type})`;
+    sendSmtpEmail.to = [{ email: email }];
+    sendSmtpEmail.sender = {
+      name: this.configService.get('EMAIL_FROM_NAME'),
+      email: this.configService.get('EMAIL_FROM'),
+    };
+
+    // Sử dụng Template HTML của bạn
+    sendSmtpEmail.htmlContent = `
+      <div style="font-family: Arial; background:#f5f6fa; padding:24px">
+        <div style="max-width:520px; margin:auto; background:#ffffff; padding:32px; border-radius:8px">
+          <h2 style="text-align:center">Elite Drive Verification</h2>
+          <div style="text-align:center; font-size:28px; font-weight:bold; letter-spacing:4px; padding:20px; background:#f1f5f9">
+            ${code}
           </div>
-
-          <h2 style="color:#1e293b; margin-bottom:12px; text-align:center">
-            Elite Drive Verification
-          </h2>
-
-          <p style="color:#334155; font-size:15px">
-            Use the OTP above to <strong>${type}</strong>.
-          </p>
-
-          <p style="color:#475569; font-size:14px">
-            This code will expire in <strong>5 minutes</strong>.
-          </p>
-
-          <p style="color:#64748b; font-size:13px; margin-top:20px">
-            If you did not request this, please ignore this email.
-          </p>
-
-          <hr style="border:none; border-top:1px solid #e2e8f0; margin:24px 0" />
-
-          <p style="color:#94a3b8; font-size:12px; text-align:center">
-            © ${new Date().getFullYear()} Elite Drive. All rights reserved.
-          </p>
+          <p>Use this code to <strong>${type}</strong>. Valid for 5 minutes.</p>
         </div>
       </div>
-    `,
-    });
+    `;
+
+    try {
+      const { body } = await this.apiInstance.sendTransacEmail(sendSmtpEmail);
+      this.logger.log(
+        `OTP gửi thành công đến ${email} | MessageId: ${body.messageId}`,
+      );
+    } catch (error: any) {
+      // Xử lý lỗi Property 'response' ở đây
+      const errorMessage = error.response?.body?.message || error.message;
+      this.logger.error(`Lỗi gửi OTP đến ${email}: ${errorMessage}`);
+      throw error;
+    }
   }
 }
