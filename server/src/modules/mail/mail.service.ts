@@ -14,16 +14,20 @@ export class MailService implements OnModuleInit {
     const apiKey = this.configService.get<string>('BREVO_API_KEY');
 
     if (!apiKey) {
-      this.logger.error('BREVO_API_KEY không được cấu hình trong env!');
-      throw new Error('Brevo API key is required');
+      this.logger.error('BREVO_API_KEY không tồn tại trong .env');
+      throw new Error('Brevo API key is required for production');
     }
 
-    this.brevo = new BrevoClient({ apiKey });
-    this.logger.log('Brevo Client v4 khởi tạo thành công');
+    this.brevo = new BrevoClient({
+      apiKey,
+      timeoutInSeconds: 30, // 30 giây timeout (đơn vị giây, không phải ms)
+      maxRetries: 3, // retry tối đa 3 lần cho 5xx hoặc rate limit (có exponential backoff + jitter)
+    });
+
+    this.logger.log('Brevo API v4 (production mode) đã khởi tạo thành công');
   }
 
   async sendOtp(email: string, code: string, type: string): Promise<void> {
-    // Parse EMAIL_FROM nếu có format "Name <email>"
     const fromFull = this.configService.get<string>(
       'EMAIL_FROM',
       'Elite Drive <noreply@elite.dev>',
@@ -64,30 +68,32 @@ export class MailService implements OnModuleInit {
           </div>
         </div>
       `,
+      textContent: `Elite Drive - Mã OTP (${type}): ${code}\n\nMã này dùng để ${type}. Hiệu lực 5 phút.\n\nNếu không phải bạn yêu cầu, bỏ qua email này.`, // fallback plain text
       tags: ['otp', type.toLowerCase().replace(/\s+/g, '-')],
-      // Optional: replyTo: { email: 'support@elite.dev', name: 'Hỗ trợ Elite Drive' },
+      replyTo: { email: 'support@elite.dev', name: 'Hỗ trợ Elite Drive' }, // production nên có
     };
 
     try {
       const response =
         await this.brevo.transactionalEmails.sendTransacEmail(payload);
 
-      // v4 thường trả về { id: string } hoặc tương tự, không phải messageId
-      this.logger.log(
-        `Gửi OTP thành công → ${email} | id: ${response.messageId || 'unknown'}`,
-      );
+      // Brevo v3 trả về { messageId: "<...>" } hoặc { messageIds: [...] }
+      const msgId = response.messageId || response.messageIds?.[0] || 'unknown';
+      this.logger.log(`Gửi OTP thành công → ${email} | messageId: ${msgId}`);
     } catch (err: any) {
       const errorDetail =
         err?.response?.data?.message ||
         err?.response?.data?.code ||
-        err.message ||
+        err?.message ||
         'Lỗi không xác định';
 
       this.logger.error(
         `Gửi OTP thất bại → ${email}: ${errorDetail}`,
         err?.stack,
       );
-      throw new Error(`Không thể gửi OTP: ${errorDetail}`);
+
+      // Production: có thể throw custom exception hoặc return false tùy logic
+      throw new Error(`Gửi OTP lỗi: ${errorDetail}`);
     }
   }
 }
