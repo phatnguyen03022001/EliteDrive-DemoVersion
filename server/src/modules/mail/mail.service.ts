@@ -28,18 +28,18 @@ export class MailService implements OnModuleInit {
   }
 
   async sendOtp(email: string, code: string, type: string): Promise<void> {
-    const fromFull = this.configService.get<string>(
-      'EMAIL_FROM',
-      'Elite Drive <noreply@elite.dev>',
-    );
-    const fromEmailMatch = fromFull.match(/<(.+)>/);
-    const fromEmail = fromEmailMatch
-      ? fromEmailMatch[1].trim()
-      : fromFull.trim();
+    // const fromFull = this.configService.get<string>(
+    //   'EMAIL_FROM',
+    //   'Elite Drive <noreply@elite.dev>',
+    // );
+    // const fromEmailMatch = fromFull.match(/<(.+)>/);
+    // const fromEmail = fromEmailMatch
+    //   ? fromEmailMatch[1].trim()
+    //   : fromFull.trim();
 
     const sender = {
-      name: this.configService.get<string>('EMAIL_FROM_NAME', 'Elite Drive'),
-      email: fromEmail,
+      name: this.configService.get('EMAIL_FROM_NAME'),
+      email: this.configService.get('EMAIL_FROM'), // Giả sử giá trị là phatnguyen...
     };
 
     const payload = {
