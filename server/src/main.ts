@@ -44,8 +44,8 @@ async function bootstrap() {
     }),
   );
   const allowedOrigins = [
-    'http://localhost:3000',
     'https://elite-drive-iota.vercel.app', // Đã sửa cho khớp với ảnh bạn gửi
+    'http://localhost:3000',
     process.env.FRONTEND_URL,
   ].filter(Boolean);
 
