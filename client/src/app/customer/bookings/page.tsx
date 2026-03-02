@@ -35,7 +35,7 @@ import Image from "next/image";
 
 import { Textarea } from "@/components/ui/textarea";
 
-const API_BASE = "http://localhost:8000/api/customer";
+const API_BASE = `${process.env.NEXT_PUBLIC_API_URL}/api/customer`;
 
 const axiosInstance = axios.create({
   baseURL: API_BASE,

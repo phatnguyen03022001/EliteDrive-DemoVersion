@@ -14,7 +14,15 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000",
+  // Sử dụng biến môi trường bạn đã cung cấp: https://elitedrive-demoversion.onrender.com
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api`,
+
+  // Quan trọng: Gửi kèm Cookies/CORS nếu bạn dùng JWT HttpOnly
+  withCredentials: true,
+
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 api.interceptors.request.use((config) => {
