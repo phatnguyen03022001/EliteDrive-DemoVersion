@@ -5,20 +5,24 @@ const nextConfig: NextConfig = {
   transpilePackages: ["shared", "ui"],
 
   async rewrites() {
+    // LƯU Ý: Ở Production, process.env.BACKEND_URL nên là URL của Render
+    // (Ví dụ: https://elitedrive-demoversion.onrender.com)
+    // KHÔNG nên dùng NEXT_PUBLIC_ ở đây để bảo mật phía Server
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:8000";
+
     return [
       {
         source: "/api/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_URL}/api/:path*`,
+        // Nếu Backend của bạn đã có prefix /api sẵn, hãy cẩn thận tránh lặp lại thành /api/api
+        destination: `${backendUrl}/api/:path*`,
       },
     ];
   },
 
   images: {
-    // 1. Cho phép các mức quality bạn hay dùng trong code
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
 
-    // 2. Định nghĩa remotePatterns để bảo mật
     remotePatterns: [
       {
         protocol: "https",
@@ -31,12 +35,17 @@ const nextConfig: NextConfig = {
         port: "9000",
         pathname: "/elitedrive/**",
       },
+      // Thêm pattern chung cho các dịch vụ lưu trữ ảnh khác nếu cần
+      {
+        protocol: "https",
+        hostname: "**",
+      },
     ],
 
-    // Tạm thời để true nếu bạn không muốn Next.js xử lý nén ảnh (giảm tải CPU server)
-    // Nhưng nếu muốn ảnh load nhanh hơn (đã qua nén), hãy để false.
-    unoptimized: process.env.NODE_ENV !== "production",
+    // Ở Production nên để false để Next.js tối ưu ảnh (WebP/AVIF) cho khách thuê xe
+    unoptimized: false,
   },
+
   async headers() {
     return [
       {
@@ -45,7 +54,7 @@ const nextConfig: NextConfig = {
           { key: "Access-Control-Allow-Credentials", value: "true" },
           {
             key: "Access-Control-Allow-Origin",
-            value: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+            value: process.env.NEXT_PUBLIC_APP_URL || "https://elite-drive-iota.vercel.app",
           },
           {
             key: "Access-Control-Allow-Methods",
@@ -60,7 +69,7 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  // output: "standalone",
+  // Giữ nguyên các dòng này
   poweredByHeader: false,
   compress: true,
 };
