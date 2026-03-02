@@ -60,7 +60,7 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  output: "standalone",
+  // output: "standalone",
   poweredByHeader: false,
   compress: true,
 };
