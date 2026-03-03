@@ -96,7 +96,7 @@ export default function MyBookingsPage() {
   const fetchBookings = async () => {
     try {
       setLoading(true);
-      const res = await callAPI("/bookings?page=1&limit=10");
+      const res = await callAPI("/bookings");
       setBookings(res.data || []);
     } catch (error: any) {
       toast.error("Không thể tải lịch sử đặt xe");
