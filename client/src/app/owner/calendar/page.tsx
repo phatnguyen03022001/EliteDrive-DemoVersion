@@ -57,7 +57,7 @@ export default function OwnerCalendarPage() {
 
   const fetchCars = async () => {
     try {
-      const { data: res } = await api.get("/api/owner/cars");
+      const { data: res } = await api.get("/owner/cars");
       const approved = res.data.filter((c: any) => c.verificationStatus === "APPROVED");
       setCars(approved);
       if (approved.length > 0) setSelectedCar(approved[0]);
@@ -75,7 +75,7 @@ export default function OwnerCalendarPage() {
       // Thay đổi số 11 thành 29 để lấy tổng cộng 30 ngày (từ hôm nay)
       end.setDate(start.getDate() + 29);
 
-      const { data: res } = await api.get(`/api/owner/cars/${carId}/calendar`, {
+      const { data: res } = await api.get(`/owner/cars/${carId}/calendar`, {
         params: {
           start_date: start.toISOString().split("T")[0],
           end_date: end.toISOString().split("T")[0],
