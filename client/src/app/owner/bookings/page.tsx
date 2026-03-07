@@ -28,7 +28,7 @@ type Booking = {
 
 const OWNER_API_BASE = `${process.env.NEXT_PUBLIC_API_URL}/api/owner`;
 
-export default function OwnerBookingPage() {
+export default function Page() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState("PENDING"); // Dựa trên VerificationStatus

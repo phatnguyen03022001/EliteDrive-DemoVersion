@@ -15,7 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const api = axios.create({
   // Sử dụng biến môi trường bạn đã cung cấp: https://elitedrive-demoversion.onrender.com
-  baseURL: `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api`,
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}`,
 
   // Quan trọng: Gửi kèm Cookies/CORS nếu bạn dùng JWT HttpOnly
   withCredentials: true,

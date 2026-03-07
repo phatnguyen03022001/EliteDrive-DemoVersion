@@ -3,7 +3,7 @@
 import { CarTable, CreateCarDialog } from "@/features/owner/car/CarComponents";
 import { ShieldCheck, Info, CarFront, Clock, CheckCircle2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useMyCars } from "@/features/owner/owner.queries";
 
