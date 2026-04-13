@@ -57,7 +57,7 @@ yarn install
 
 Database is already configured at:
 ```
-mongodb+srv://elitedrive:elitedrive@elitedrive.qwuvogw.mongodb.net/?appName=EliteDrive
+mongodb+srv://elitedrive:xxx
 ```
 
 #### Option B: Run MongoDB Locally with Docker
