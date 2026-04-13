@@ -76,7 +76,7 @@ MongoDB will run at `mongodb://localhost:27017`
 Create `.env` file in `server/` directory:
 
 ```env
-DATABASE_URL=mongodb+srv://elitedrive:elitedrive@elitedrive.qwuvogw.mongodb.net/?appName=EliteDrive
+DATABASE_URL=xxxs
 # or for local MongoDB
 # DATABASE_URL=mongodb://localhost:27017/elitedrive
 
