@@ -4,11 +4,11 @@
 
 ---
 
-EliteDrive là một hệ thống quản lý cho thuê xe được xây dựng bằng **Next.js** (client), **NestJS** (server), và **MongoDB** (database).
+EliteDrive is a comprehensive car rental management system built with **Next.js** (client), **NestJS** (server), and **MongoDB** (database).
 
 **🌐 Live Demo:** [https://elite-drive-iota.vercel.app/](https://elite-drive-iota.vercel.app/)
 
-## 🏗️ Cấu trúc dự án
+## 🏗️ Project Structure
 
 ```
 EliteDrive/
@@ -20,88 +20,92 @@ EliteDrive/
 
 ---
 
-## 📋 Yêu cầu
+## 📋 Prerequisites
 
-- **Node.js**: v18 hoặc cao hơn
-- **npm** hoặc **yarn** hoặc **pnpm**
-- **Docker** (tùy chọn, để chạy MongoDB, MinIO, Garage)
+- **Node.js**: v18 or higher
+- **npm**, **yarn**, or **pnpm**
+- **Docker** (optional, for running MongoDB, MinIO, Garage)
 - **Git**
 
 ---
 
-## 🚀 Hướng dẫn chạy dự án
+## 🚀 Quick Start Guide
 
-### 1️⃣ Clone và cài đặt dependencies
+### 1️⃣ Clone and Install Dependencies
 
 ```bash
 # Clone repository
 git clone git@github.com:phatnguyen03022001/EliteDrive-Demo-Version-.git
 cd EliteDrive
 
-# Cài đặt dependencies cho client
+# Install client dependencies
 cd client
 npm install
-# hoặc
+# or
 yarn install
 
-# Cài đặt dependencies cho server (từ thư mục gốc)
+# Install server dependencies (from root directory)
 cd ../server
 npm install
-# hoặc
+# or
 yarn install
 ```
 
-### 2️⃣ Cấu hình Database
+### 2️⃣ Database Configuration
 
-#### Option A: Sử dụng MongoDB Atlas (Cloud)
+#### Option A: Use MongoDB Atlas (Cloud)
 
-Database đã được cấu hình tại:
+Database is already configured at:
 ```
 mongodb+srv://elitedrive:elitedrive@elitedrive.qwuvogw.mongodb.net/?appName=EliteDrive
 ```
 
-#### Option B: Chạy MongoDB cục bộ bằng Docker
+#### Option B: Run MongoDB Locally with Docker
 
 ```bash
 cd docker/mongodb
 docker-compose up -d
 ```
 
-MongoDB sẽ chạy tại `mongodb://localhost:27017`
+MongoDB will run at `mongodb://localhost:27017`
 
-### 3️⃣ Cấu hình biến môi trường
+### 3️⃣ Environment Configuration
 
 #### Server (.env)
 
-Tạo file `.env` trong thư mục `server/`:
+Create `.env` file in `server/` directory:
 
 ```env
 DATABASE_URL=mongodb+srv://elitedrive:elitedrive@elitedrive.qwuvogw.mongodb.net/?appName=EliteDrive
-# hoặc nếu dùng local MongoDB
+# or for local MongoDB
 # DATABASE_URL=mongodb://localhost:27017/elitedrive
 
 JWT_SECRET=your_jwt_secret_key
 BCRYPT_ROUNDS=10
+BREVO_API_KEY=your_brevo_api_key
+EMAIL_FROM=your_email@domain.com
+EMAIL_FROM_NAME=Elite Drive
+APP_PORT=3001
 ```
 
 #### Client (.env.local)
 
-Tạo file `.env.local` trong thư mục `client/`:
+Create `.env.local` file in `client/` directory:
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:3001
 ```
 
-### 4️⃣ Khởi động ứng dụng
+### 4️⃣ Start the Application
 
-#### Chạy Backend (NestJS)
+#### Start Backend (NestJS)
 
 ```bash
 cd server
 
 # Development mode
 npm run start:dev
-# hoặc
+# or
 yarn start:dev
 
 # Production mode
@@ -109,50 +113,50 @@ npm run build
 npm run start
 ```
 
-Backend sẽ chạy tại `http://localhost:3001`
+Backend will run at `http://localhost:3001`
 
-#### Chạy Frontend (Next.js)
+#### Start Frontend (Next.js)
 
-Mở terminal mới:
+Open a new terminal:
 
 ```bash
 cd client
 
 # Development mode
 npm run dev
-# hoặc
+# or
 yarn dev
-# hoặc
+# or
 pnpm dev
 ```
 
-Frontend sẽ chạy tại `http://localhost:3000`
+Frontend will run at `http://localhost:3000`
 
 ---
 
-## 🛠️ Cơ sở dữ liệu - Prisma
+## 🛠️ Database - Prisma
 
 ### Prisma Migration
 
 ```bash
 cd server
 
-# Tạo migration mới
+# Create new migration
 npm run prisma:migrate:dev -- --name <migration_name>
 
 # Reset database
 npm run prisma:migrate:reset
 
-# Kiểm tra trạng thái migration
+# Check migration status
 npm run prisma:migrate:status
 
-# Mở Prisma Studio (UI để quản lý dữ liệu)
+# Open Prisma Studio (UI for data management)
 npm run prisma:studio
 ```
 
 ---
 
-## 📚 Cấu trúc dự án chi tiết
+## 📚 Detailed Project Structure
 
 ### Frontend (Next.js)
 
@@ -187,18 +191,125 @@ server/src/
 ├── app.module.ts       # Main module
 ├── app.service.ts      # Main service
 ├── main.ts             # Entry point
-├── common/             # Common utilities, enums
+├── common/             # Common utilities, enums, decorators
+│   ├── decorators/     # Custom decorators (CurrentUser, Roles, Public)
+│   ├── dto/            # Data Transfer Objects
+│   ├── guards/         # Auth guards (JwtAuthGuard, RolesGuard)
+│   └── interfaces/     # TypeScript interfaces
 ├── config/             # Configuration
 ├── modules/            # Feature modules
+│   ├── admin/          # Admin management
+│   ├── auth/           # Authentication
+│   ├── customer/       # Customer operations
+│   ├── mail/           # Email service (Brevo integration)
+│   ├── public/         # Public endpoints
+│   └── upload/         # File upload service
 └── prisma/             # Prisma service
 ```
 
 ---
 
-## 🐳 Docker Services (Tùy chọn)
+## 🔐 Authentication & Authorization
+
+The system supports three user roles with JWT-based authentication:
+
+### User Roles
+1. **Admin** - Full system management
+2. **Owner** - Car owners and fleet management
+3. **Customer** - Car rental customers
+
+### Authentication Flow
+- JWT tokens with role-based access control
+- Email verification via OTP
+- Password reset functionality
+- Session management
+
+---
+
+## 📊 API Modules Overview
+
+### 1. Authentication Module (`/api/auth`)
+- User registration with email verification
+- Login with email/password or OTP
+- Password reset functionality
+- JWT token generation
+
+### 2. Customer Module (`/api/customer`)
+- Profile management
+- KYC submission and verification
+- Car search and booking
+- Payment processing
+- Contract management
+- Wallet operations
+- Reviews and ratings
+
+### 3. Admin Module (`/api/admin`)
+- System overview and analytics
+- Car approval and management
+- KYC customer verification
+- Promotion management
+- Payment and settlement processing
+- Dispute resolution
+- User management
+- Platform wallet management
+
+### 4. Public Module (`/api`)
+- Public car listings
+- Promotion display
+- Car availability checking
+- Review summaries
+
+### 5. Upload Module (`/upload`)
+- Image upload to Cloudinary
+- File validation and processing
+
+---
+
+## 📧 Email Service
+
+The system uses **Brevo** (formerly Sendinblue) for transactional emails:
+- OTP delivery for registration/login
+- Password reset emails
+- Booking confirmations
+- System notifications
+
+### Configuration
+```env
+BREVO_API_KEY=your_api_key
+EMAIL_FROM=your_email@domain.com
+EMAIL_FROM_NAME=Elite Drive
+```
+
+---
+
+## 🗄️ Database Schema
+
+### Core Models
+- **User**: User accounts with role-based permissions
+- **KYC**: Know Your Customer verification data
+- **Car**: Vehicle listings with pricing and availability
+- **Booking**: Rental reservations
+- **Payment**: Transaction records
+- **Wallet**: User wallet for payments
+- **Contract**: Rental agreements
+- **Review**: Customer feedback
+- **Promotion**: Discount codes and offers
+- **Dispute**: Conflict resolution system
+
+### Key Features
+- Multi-role user system (Admin, Owner, Customer)
+- KYC verification with document upload
+- Real-time car availability tracking
+- Escrow payment system
+- Contract signing workflow
+- Dispute management
+- Settlement processing for owners
+
+---
+
+## 🐳 Docker Services (Optional)
 
 ### MongoDB
-
 ```bash
 cd docker/mongodb
 docker-compose up -d
@@ -206,16 +317,13 @@ docker-compose down  # Stop service
 ```
 
 ### MinIO (Object Storage)
-
 ```bash
 cd docker/minio
 docker-compose up -d
 ```
-
 Access at: `http://localhost:9001`
 
 ### Garage (Distributed Storage)
-
 ```bash
 cd docker/garage
 docker-compose up -d
@@ -223,31 +331,46 @@ docker-compose up -d
 
 ---
 
-## 🔐 Authentication
+## 🔧 Development Commands
 
-Dự án hỗ trợ 3 loại người dùng:
+### Backend (NestJS)
+```bash
+# Development with watch mode
+npm run start:dev
 
-1. **Admin** - Quản lý toàn hệ thống
-2. **Owner** - Chủ sở hữu xe
-3. **Customer** - Khách hàng
+# Production build
+npm run build
+npm run start:prod
 
----
+# Run tests
+npm run test
+npm run test:e2e
 
-## 📁 Tệp cấu hình quan trọng
+# Linting
+npm run lint
+npm run format
+```
 
-- **server/prisma/schema.prisma** - Database schema
-- **client/next.config.ts** - Next.js configuration
-- **client/tailwind.config.ts** - Tailwind CSS configuration
-- **server/nest-cli.json** - NestJS CLI configuration
+### Frontend (Next.js)
+```bash
+# Development server
+npm run dev
+
+# Production build
+npm run build
+npm run start
+
+# Linting
+npm run lint
+```
 
 ---
 
 ## 🐛 Troubleshooting
 
-### Port đã được sử dụng
-
+### Port Already in Use
 ```bash
-# Tìm process dùng port
+# Find process using port
 lsof -i :3000    # Frontend
 lsof -i :3001    # Backend
 
@@ -255,35 +378,45 @@ lsof -i :3001    # Backend
 kill -9 <PID>
 ```
 
-### Database connection error
+### Database Connection Error
+- Check MongoDB is running: `mongo --eval "db.adminCommand('ping')"`
+- Verify `DATABASE_URL` in `.env`
 
-- Kiểm tra MongoDB đang chạy: `mongo --eval "db.adminCommand('ping')"`
-- Xác minh `DATABASE_URL` trong `.env`
-
-### Dependencies conflict
-
+### Dependencies Conflict
 ```bash
-# Xóa node_modules và package-lock.json
+# Remove node_modules and package-lock.json
 rm -rf node_modules package-lock.json
 npm install
 ```
+
+### Email Service Issues
+- Verify Brevo API key is valid
+- Check email quota and rate limits
+- Ensure email templates are properly configured
 
 ---
 
 ## 📞 Support
 
-Nếu gặp vấn đề, vui lòng kiểm tra:
+If you encounter issues, please check:
 
 1. Node.js version: `node --version`
 2. npm version: `npm --version`
-3. Logs từ server và client
+3. Server and client logs
 4. Database connection status
+5. Environment variable configuration
+
+For production deployment issues:
+- Verify all environment variables are set
+- Check database connection strings
+- Ensure email service API keys are valid
+- Review CORS configuration
 
 ---
 
 ## 📝 License
 
-This project is proprietary software.
+This project is proprietary software. All rights reserved.
 
 ---
 
@@ -294,7 +427,37 @@ This project is proprietary software.
 - [Prisma Documentation](https://www.prisma.io/docs)
 - [MongoDB Documentation](https://docs.mongodb.com)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Brevo API Documentation](https://developers.brevo.com/docs)
 
 ---
 
-**Happy coding! 🚀**
+## 🚀 Deployment
+
+### Vercel (Frontend)
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+```
+
+### Railway/Heroku (Backend)
+```bash
+# Build and deploy
+npm run build
+# Configure environment variables in hosting platform
+```
+
+### Docker Deployment
+```bash
+# Build Docker images
+docker build -t elitedrive-client ./client
+docker build -t elitedrive-server ./server
+
+# Run with Docker Compose
+docker-compose up -d
+```
+
+---
+
